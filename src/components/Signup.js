@@ -3,8 +3,8 @@ import { useFormik } from 'formik'
 import axios from 'axios'
 import { Link } from "react-router-dom";
 import 'antd/dist/antd.css';
-
 import { Alert } from 'antd';
+
 function Signup() {
 	const [alert, setAlert] = useState(false);
 
