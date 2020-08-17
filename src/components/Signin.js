@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useFormik } from 'formik'
 import axios from 'axios'
-import { Link } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import { Alert } from 'antd';
 
 
@@ -17,22 +17,26 @@ function Signin() {
 		onSubmit: async values => axios.post(`http://localhost:4000/signin`, values)
 			.then(res => {
 				console.log(res.status);
-				// }, e => alert(JSON.stringify(e.message)))
+				setAlert('success')
 			}, e => {
 				if (e.message.includes('401')) {
-					setAlert(true)
+					setAlert('error')
 					setTimeout(function () { setAlert(false) }, 3000)
 				}
 			})
 	})
 	return (
 		<>
-			{alert && <Alert
-				message="User exists"
+			{alert && (alert == 'error' ? (<Alert
+				message="username or password error"
 				description="Check your username or password"
 				type="error"
 				closable
-			/>}
+			/>) :
+				<Redirect
+					to={{ pathname: "/start" }}
+				/>
+			)}
 			<form onSubmit={formik.handleSubmit}>
 				<label>email</label>
 				<input
