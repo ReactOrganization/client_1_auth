@@ -6,12 +6,13 @@ import { Link } from "react-router-dom";
 
 
 
-function Signup() {
+function Signin() {
 	const formik = useFormik({
 		initialValues: {
 			name: '',
 			password: ''
 		},
+		// Todo change post url to singin
 		onSubmit: async values => axios.post(`http://localhost:4000/signup`, values)
 		.then(res => {
 			console.log(res.status);
@@ -42,10 +43,10 @@ function Signup() {
 
 			</form>
 			<div>
-				<Link to="/signin">Sign in</Link>
+				<Link to="/">Sign up</Link>
 			</div>
 			</>
 	);
 }
 
-export default Signup;
+export default Signin;
