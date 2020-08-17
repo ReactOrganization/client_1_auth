@@ -12,11 +12,11 @@ function Signin() {
 			name: '',
 			password: ''
 		},
-		// Todo change post url to singin
-		onSubmit: async values => axios.post(`http://localhost:4000/signup`, values)
+		onSubmit: async values => axios.post(`http://localhost:4000/signin`, values)
 		.then(res => {
 			console.log(res.status);
-		}, e => e.message.includes('409') && alert('username exist'))
+		}, e => alert(JSON.stringify(e.message)))
+		// }, e => e.message.includes('Not Allowed') && alert('password bro'))
 	})
 	return (
 		<>
