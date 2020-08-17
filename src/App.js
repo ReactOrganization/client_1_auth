@@ -1,26 +1,45 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useFormik } from 'formik'
+import axios from 'axios'
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const formik = useFormik({
+		initialValues: {
+			name: '',
+			password: ''
+		},
+		onSubmit: async values => axios.post(`http://localhost:4000/signup`, values)
+		.then(res => {
+			console.log(res.status);
+		}, e => e.message.includes('409') && alert('username exist'))
+	})
+	return (
+		<div className="App">
+			<form onSubmit={formik.handleSubmit}>
+				<label>email</label>
+				<input
+					id='name'
+					name='name'
+					type='text'
+					onChange={formik.handleChange}
+					value={formik.values.email}
+				/>
+
+				<label>password</label>
+				<input
+					id='password'
+					name='password'
+					type='password'
+					onChange={formik.handleChange}
+					value={formik.values.password
+					}
+				/>
+				<button type='submit'>Submit</button>
+
+			</form>
+		</div>
+	);
 }
 
 export default App;
