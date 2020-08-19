@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useFormik } from 'formik'
 import axios from 'axios'
 import { Redirect, Link } from "react-router-dom";
 import { Alert } from 'antd';
+import { Context } from "../Context";
 
 
 
 function Signin() {
 	const [alert, setAlert] = useState(false);
+	const [user, setUser] = useContext(Context);
+
 
 	const formik = useFormik({
 		initialValues: {
@@ -17,6 +20,7 @@ function Signin() {
 		onSubmit: async values => axios.post(`http://localhost:4000/signin`, values)
 			.then(res => {
 				console.log(res.status);
+				setUser({ ...user, userName: { ...user.userName, name: values.name } })
 				setAlert('success')
 			}, e => {
 				if (e.message.includes('401')) {
@@ -27,16 +31,17 @@ function Signin() {
 	})
 	return (
 		<>
-			{alert && (alert == 'error' ? (<Alert
-				message="username or password error"
-				description="Check your username or password"
+			{alert && (alert == 'error' && <Alert
+				message="Password error"
+				description="Check your password"
 				type="error"
 				closable
-			/>) :
-				<Redirect
-					to={{ pathname: "/start" }}
-				/>
-			)}
+			/>)}
+			{user && user.userName && user.userName.name !== '' ? 
+			<Redirect
+				to={{ pathname: "/start" }}
+			/> : null}
+			
 			<form onSubmit={formik.handleSubmit}>
 				<label>email</label>
 				<input
