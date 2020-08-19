@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { useFormik } from 'formik'
 import axios from 'axios'
 import { Redirect, Link } from "react-router-dom";
-import { Alert } from 'antd';
+import { Alert, AlertTitle } from '@material-ui/lab'
 import { Context } from "../Context";
 
 
@@ -31,17 +31,19 @@ function Signin() {
 	})
 	return (
 		<>
-			{alert && (alert == 'error' && <Alert
-				message="Password error"
-				description="Check your password"
-				type="error"
-				closable
-			/>)}
-			{user && user.userName && user.userName.name !== '' ? 
-			<Redirect
-				to={{ pathname: "/start" }}
-			/> : null}
-			
+			{alert && (alert == 'error' &&
+				<Alert
+					severity="error"
+					icon={false}
+				>
+					<AlertTitle>Password error</AlertTitle>
+					<strong>Check your password</strong>
+				</Alert>)}
+			{user && user.userName && user.userName.name !== '' ?
+				<Redirect
+					to={{ pathname: "/start" }}
+				/> : null}
+
 			<form onSubmit={formik.handleSubmit}>
 				<label>email</label>
 				<input
