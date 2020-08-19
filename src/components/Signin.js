@@ -52,6 +52,7 @@ function Signin() {
 					type='text'
 					onChange={formik.handleChange}
 					value={formik.values.email}
+					required
 				/>
 
 				<label>password</label>
@@ -60,8 +61,8 @@ function Signin() {
 					name='password'
 					type='password'
 					onChange={formik.handleChange}
-					value={formik.values.password
-					}
+					value={formik.values.password	}
+					required
 				/>
 				<button type='submit'>Submit</button>
 
